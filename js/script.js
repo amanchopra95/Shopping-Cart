@@ -23,32 +23,31 @@ $(document).ready(function () {
     });
 
     
-
-
-    
 });
 
 function displayCart() {
 
-    let tr = $('<tr></tr>');
+    let tr = '';
+    let display = '';
     for(let i in cart){
 
+        tr = $('<tr></tr>');
         let product = $('<td data-th="Product"></td>');
         let removeHtml = $('<div class="col-xs-2" id="remove">'+
             '<i class="glyphicon glyphicon-remove-circle"></i></div>');
         let imgHtml = $('<div class="col-xs-5">'+
             '<img src="images/Wallpaper.jpg" class="img-thumbnail"></div>');
         let productName = $('<div class="col-xs-5">'+
-            '<h4>${cart[i].name}</h4></div>');
-        let productPrice = $('<td data-th="Price">${cart[i].price}</td>');
-        let productCount = $('<td data-th="Count"><input type="number" value="${cart[i].count}" id="count"></td>');
-        let subTotal = $('<td data-th="Subtotal">${subTotal(cart[i].name)}</td>');
-        let btnwrapper = $('<td data-th="">');
+            '<h4>'+cart[i].name+'</h4></div>');
+        let productPrice = $('<td data-th="Price">'+cart[i].price+'</td>');
+        let productCount = $('<td data-th="Count"><input type="number" value="'+cart[i].count+'" id="count"></td>');
+        let subtotal = $('<td data-th="Subtotal">'+subTotal(cart[i].name)+'</td>');
+        let btnwrapper = $('<td data-th=""></td>');
         let addbtn = $('<button class="btn btn-primary btn-xs" id="addbtn"><i class="glyphicon glyphicon-plus"></i></button>');
-        let minusbtn = $('<button class="btn btn-danger btn-xs" id="minusbtn"><i class="glyphicon glyphicon-minus"></i></button></td></tr>');
+        let minusbtn = $('<button class="btn btn-danger btn-xs" id="minusbtn"><i class="glyphicon glyphicon-minus"></i></button>');
 
-        tr.append(prodcut.append(removeHtml).append(imgHtml).append(productName))
-        .append(productPrice).append(productCount).append(subTotal).append(btnwrapper.append(addbtn).append(minusbtn))
+        tr.append(product.append(removeHtml).append(imgHtml).append(productName)).append(productPrice).append(productCount).append(subtotal).append
+        (btnwrapper.append(addbtn).append(minusbtn));
     }
 
     $('#items').append(tr);
