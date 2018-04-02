@@ -13,7 +13,7 @@
 $(document).ready(function () {
 
     cartList = $('#items');
-    loadCart();
+    
     refreshCart(true);
     
     $('.add-to-cart').click(function(event) {
@@ -33,10 +33,11 @@ $(document).ready(function () {
         itemCount(name, count);
     });
 
-    $('.remove').click(function(event) { 
+    /**
+     * $('.remove').click(function(event) { 
         let name = $(this).attr('data-name');
-        removeCompleteItem(name); 
-    });
+        removeCompleteItem(name);
+    });*/
 
     $('.addbtn').click(function(event) {
         let name = $(this).attr('data-name');
@@ -58,7 +59,10 @@ function displayCart(i) {
     tr = $('<tr></tr>');
     let product = $('<td data-th="Product"></td>');
     let removeHtml = $('<div class="col-xs-2">'+
-        '<button class="btn btn-danger btn-xs remove" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-remove-circle"></i></button></div>');
+        '<button class="btn btn-danger btn-xs remove" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-remove-circle"></i></button></div>')
+        .click( () => {
+            removeCompleteItem(cart[i].name);
+        });
     let imgHtml = $('<div class="col-xs-5">'+
         '<img src="images/Wallpaper.jpg" class="img-thumbnail"></div>');
     let productName = $('<div class="col-xs-5 name">'+
@@ -67,8 +71,14 @@ function displayCart(i) {
     let productCount = $('<td data-th="Count"><input type="number" value="'+cart[i].count+'" class="count" data-name="'+cart[i].name+'"></td>');
     let subtotal = $('<td data-th="Subtotal">'+subTotal(cart[i].name)+'</td>');
     let btnwrapper = $('<td data-th=""></td>');
-    let addbtn = $('<button class="btn btn-primary btn-xs addbtn" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-plus"></i></button>');
-    let minusbtn = $('<button class="btn btn-danger btn-xs minusbtn" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-minus"></i></button>');
+    let addbtn = $('<button class="btn btn-primary btn-xs addbtn" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-plus"></i></button>')
+    .click(() => {
+        addCount(cart[i].name);
+    });
+    let minusbtn = $('<button class="btn btn-danger btn-xs minusbtn" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-minus"></i></button>')
+    .click( () => {
+        minusCount(cart[i].name);
+    });
 
     tr.append(product.append(removeHtml).append(imgHtml).append(productName)).append(productPrice).append(productCount).append(subtotal).append
     (btnwrapper.append(addbtn).append(minusbtn));
@@ -192,6 +202,7 @@ function refreshCart(firstPageLoad = false){
         saveCart();
     }
     cartList.empty();
+    loadCart();
 
     for(let i in cart){
         let cartItem = displayCart(i);
