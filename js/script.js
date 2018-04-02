@@ -126,8 +126,8 @@ function removeCompleteItem(name) {
 function addCount(name) {
     
     for(let i in cart) {
-        if (cart[i].name === pname){
-            cart[i].count += count;
+        if (cart[i].name === name){
+            cart[i].count++;
             break;
         }
     }
