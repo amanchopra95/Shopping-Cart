@@ -32,23 +32,6 @@ $(document).ready(function () {
         let count = Number($(this).val());
         itemCount(name, count);
     });
-
-    /**
-     * $('.remove').click(function(event) { 
-        let name = $(this).attr('data-name');
-        removeCompleteItem(name);
-    });*/
-
-    $('.addbtn').click(function(event) {
-        let name = $(this).attr('data-name');
-        addCount(name);
-    });
-
-    $('.minusbtn').click(function(event) {
-        let name = $(this).attr('data-name');
-        minusCount(name);
-    });
-    
     
 });
 
