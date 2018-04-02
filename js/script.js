@@ -13,9 +13,12 @@
 $(document).ready(function () {
 
     cartList = $('#items');
+    loadCart();
+    refreshCart(true);
     
     $('.add-to-cart').click(function(event) {
         event.preventDefault();
+
         let name = $(this).attr('data-name');
         let price = Number($(this).attr('data-price'));
 
@@ -23,8 +26,28 @@ $(document).ready(function () {
         console.log(cart);
         refreshCart(true);
     });
-    
 
+    $('.count').change(function(event) {
+        let name = $(this).attr('data-name');
+        let count = Number($(this).val());
+        itemCount(name, count);
+    });
+
+    $('.remove').click(function(event) { 
+        let name = $(this).attr('data-name');
+        removeCompleteItem(name); 
+    });
+
+    $('.addbtn').click(function(event) {
+        let name = $(this).attr('data-name');
+        addCount(name);
+    });
+
+    $('.minusbtn').click(function(event) {
+        let name = $(this).attr('data-name');
+        minusCount(name);
+    });
+    
     
 });
 
@@ -34,18 +57,18 @@ function displayCart(i) {
     
     tr = $('<tr></tr>');
     let product = $('<td data-th="Product"></td>');
-    let removeHtml = $('<div class="col-xs-2" id="remove">'+
-        '<i class="glyphicon glyphicon-remove-circle"></i></div>');
+    let removeHtml = $('<div class="col-xs-2">'+
+        '<button class="btn btn-danger btn-xs remove" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-remove-circle"></i></button></div>');
     let imgHtml = $('<div class="col-xs-5">'+
         '<img src="images/Wallpaper.jpg" class="img-thumbnail"></div>');
-    let productName = $('<div class="col-xs-5">'+
-        '<h4>'+cart[i].name+'</h4></div>');
+    let productName = $('<div class="col-xs-5 name">'+
+        '<h4 id="pname">'+cart[i].name+'</h4></div>');
     let productPrice = $('<td data-th="Price">'+cart[i].price+'</td>');
-    let productCount = $('<td data-th="Count"><input type="number" value="'+cart[i].count+'" id="count"></td>');
+    let productCount = $('<td data-th="Count"><input type="number" value="'+cart[i].count+'" class="count" data-name="'+cart[i].name+'"></td>');
     let subtotal = $('<td data-th="Subtotal">'+subTotal(cart[i].name)+'</td>');
     let btnwrapper = $('<td data-th=""></td>');
-    let addbtn = $('<button class="btn btn-primary btn-xs" id="addbtn"><i class="glyphicon glyphicon-plus"></i></button>');
-    let minusbtn = $('<button class="btn btn-danger btn-xs" id="minusbtn"><i class="glyphicon glyphicon-minus"></i></button>');
+    let addbtn = $('<button class="btn btn-primary btn-xs addbtn" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-plus"></i></button>');
+    let minusbtn = $('<button class="btn btn-danger btn-xs minusbtn" data-name="'+cart[i].name+'"><i class="glyphicon glyphicon-minus"></i></button>');
 
     tr.append(product.append(removeHtml).append(imgHtml).append(productName)).append(productPrice).append(productCount).append(subtotal).append
     (btnwrapper.append(addbtn).append(minusbtn));
@@ -82,7 +105,7 @@ function loadCart(){
 }
 
 function removeItemFromCart(name) {
-    for (i in cart) {
+    for (let i in cart) {
         if (cart[i].name === name){
             cart[i].count--;
             if (cart[i].count == 0){
@@ -92,10 +115,11 @@ function removeItemFromCart(name) {
         }
     }
     saveCart();
+    refreshCart();
 }
 
 function removeCompleteItem(name) {
-    for (var i in cart) {
+    for (let i in cart) {
         if(cart[i].name === name) {
             cart.splice(i, 1);
             break;
@@ -103,26 +127,44 @@ function removeCompleteItem(name) {
     }
 
     saveCart();
+    refreshCart();
 }
 
-function addCount(name, count) {
-    for(var i in cart) {
-        if (cart[i].name === name){
+function addCount(name) {
+    
+    for(let i in cart) {
+        if (cart[i].name === pname){
             cart[i].count += count;
+            break;
         }
     }
 
     saveCart();
+    refreshCart();
 }
 
-function minusCount(name, count) {
-    for(var i in cart){
+function itemCount(name, count) {
+
+    for(let i in cart){
+        if (cart[i].name === name){
+            cart[i].count = count;
+            break;
+        }
+    }
+    refreshCart();
+}
+
+function minusCount(name) {
+
+    console.log(name);
+    for(let i in cart){
         if (cart[i].name === name){
             cart[i].count--;
         }
     }
 
     saveCart();
+    refreshCart();
 }
 
 function subTotal(name) {
@@ -151,7 +193,7 @@ function refreshCart(firstPageLoad = false){
     }
     cartList.empty();
 
-    for(i in cart){
+    for(let i in cart){
         let cartItem = displayCart(i);
         cartList.append(cartItem);
     }
