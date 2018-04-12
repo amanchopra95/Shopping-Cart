@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#header{
+    background-color: #00cc99;
+}
+
+#header a{
+    color : #fff;
+}
+
+#header a:hover{
+    color: #333;
+}
+
+#accordion .panel-primary > .panel-heading{
+    color: #333;
+    background-color: #00cc99;
+    display: block;
+    text-decoration: none;
+}
+
+#accordion .panel-primary > .panel-heading a:hover{
+    text-decoration-line: none;
+}
+
+#accordion .panel-primary > .panel-heading a:after{
+    content: '';
+    position: relative;
+    font-family: 'Glyphicons Halflings';
+    float: right;
+
+}
+
+#product-display {
+    margin: 32px;
+    padding: 2px;
+}
+
+#description > ul > li {
+    list-style: none;
+}
+
+#buy + div{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+
+#cart-table-total{
+    text-align: right;
+    padding-right: 55px;
+    font-weight: bold;
+    
+}
