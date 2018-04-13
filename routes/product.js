@@ -24,7 +24,7 @@ routes.get('/:id/delete', (req, res) => {
                     id: product.dataValues.id
                 }
             }).then(() => {
-                res.redirect('../admin')
+                res.redirect('back')
             })
             .catch((err) => {
                 res.send(err)
