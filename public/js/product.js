@@ -13,23 +13,6 @@ function postProduct(product, done) {
     });
 }
 
-function getProductId(name) {
-    let pid;
-    console.log("In getProductId function")
-    $.get('/'+name, (id) => {
-        pid = id;
-    });
-    console.log(pid);
-    return pid;
-}
-
-function deleteProduct(id){
-    console.log("In deleteProduct function.")
-    $.get('/'+id+'/delete', () => {
-        console.log("Product deleted")
-    })
-}
-
 $(function () {
 
     function refreshProducts(){
@@ -44,7 +27,7 @@ $(function () {
                                 ${product.name}
                             </h4>
                             <div id="description">
-                                <ul class="list-inline-group">
+                                <ul class="list-inline-group text-center">
                                     <li>Lorem</li>
                                     <li>Porem</li>
                                     <li>Ipsum</li>

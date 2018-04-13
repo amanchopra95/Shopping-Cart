@@ -16,19 +16,6 @@ routes.post('/', (req, res) => {
     .catch((err) => { res.send(err.message)})
 });
 
-routes.get('/:name', (req, res) => {
-    console.log(req.params.name);
-    Product.findOne({
-        where: {
-            name: req.params.name
-        }
-    }).then((product) => {
-        res.send(product.id);
-    }).catch((err) => {
-        res.send(err.message);
-    })
-})
-
 routes.get('/:id/delete', (req, res) => {
     Product.findById(req.params.id)
         .then((product) => {
@@ -37,7 +24,7 @@ routes.get('/:id/delete', (req, res) => {
                     id: product.dataValues.id
                 }
             }).then(() => {
-                res.redirect('/products')
+                res.redirect('../admin')
             })
             .catch((err) => {
                 res.send(err)

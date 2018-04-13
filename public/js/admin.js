@@ -1,6 +1,6 @@
 $(function () {
 
-    function refreshProducts(){
+    /**function refreshProducts(){
         let productDisplay = $('#product-display')
         for(product of products){
             productDisplay.append(`
@@ -29,6 +29,22 @@ $(function () {
                 </div>
             `)
         }
+    }*/
+
+    function refreshTableProduct() {
+        let productTableRow = $('#product-table-row');
+        productTableRow.empty();
+        for (product of products) {
+            productTableRow.append(`
+            <tr>
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>
+                    <a href="../products/${product.id}/delete"><span><i class="fas fa-trash-alt"></i></span></a>
+                </td>
+            </tr>
+            `)
+        }
     }
 
     $('#submit-product').click( (event) => {
@@ -36,12 +52,8 @@ $(function () {
         postProduct({
             name: $('#product-name').val(),
             price: $('#product-price').val()
-        }, refreshProducts)
+        }, refreshTableProduct)
     })
 
-    $('#delete-product').click( (event) => {
-        event.preventDefault();
-        let id = getProductId($('#delete-product-name').val());
-        deleteProduct(id);
-    })
+    getProducts(refreshTableProduct);
 })
