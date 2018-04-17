@@ -24,8 +24,43 @@ const Product = db.define('product', {
     }
 });
 
+const User = db.define('user', {
+    username: {
+        type: sequelize.DataTypes.STRING(50),
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: sequelize.DataTypes.STRING,
+        allowNull: false
+    }
+});
+
+const Cart = db.define('cart', {
+    quantity: {
+        type: sequelize.DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    userId: {
+        type: sequelize.DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id'
+        },
+        unique: 'user_product'
+    },
+    productId: {
+        type: sequelize.DataTypes.INTEGER,
+        references: {
+            model: Product,
+            key: 'id'
+        },
+        unique: 'user_product'
+    }
+})
+
 db.sync().then(() => console.log("Database Connected"));
 
 module.exports = {
-    Product
+    Product, User, Cart
 }

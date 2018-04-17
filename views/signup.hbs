@@ -59,55 +59,40 @@
         <div class="row">
 
             <!--Add Left sidebar-->
-            <div class="col-lg-1"></div>
-            <!--<div class="col-lg-3">
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a href="#panelBodyOne" data-toggle="collapse" data-parent="#accordion" aria-controls="panelBodyOne">
-                                    Computers
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="panelBodyOne" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <ul class="nav">
-                                    <li><a href="">Computer Accessories</a></li>
-                                    <li><a href="">Computer Accessories</a></li>
-                                    <li><a href="">Computer Accessories</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a href="#panelBodyTwo" data-toggle="collapse" data-parent="#accordion" aria-controls="panelBodyTwo">
-                                    Mobiles
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="panelBodyTwo" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <ul class="nav">
-                                    <li><a href="">Computer Accessories</a></li>
-                                    <li><a href="">Computer Accessories</a></li>
-                                    <li><a href="">Computer Accessories</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>                     
-            </div>-->
+            <div class="col-lg-2"></div>
 
             <!--Main product display layout-->
-            <div class="col-lg-10">
-                <div id="product-display">
-                    
+            <div class="col-lg-8">
+                <div id="signup-form" class="row">
+                    <h2 class="h2 text-center">SignUp Form</h2>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <form action="/signup" method="post">
+                            <div class="form-group">
+                                <label for="user-username">Username</label>
+                                <input class="form-control" type="text"
+                                    placeholder="Enter Username" name="username"
+                                    id="user-username">
+                                <label for="user-password">Password</label>
+                                <input class="form-control" type="password"
+                                    placeholder="Enter password secretly" name="password"
+                                    id="user-password">
+                                
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <input type="submit" value="Submit" 
+                                         id="user-singup-submit" class="btn btn-success col-lg-5">
+                                    <input type="reset" value="Reset" 
+                                        id="user-singup-reset" class="btn btn-danger col-lg-5">
+                                    <div class="col-lg-1"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-2"></div>
                 </div>
             </div>
-            
+            <!-- Add right sidebar -->
             <div class="col-lg-1"></div>
         </div>
     </div>
