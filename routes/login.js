@@ -10,7 +10,7 @@ route.post('/',
         'local',
         {failureRedirect: '/login'}), 
     (req, res) => {
-        res.redirect('/');
+        res.redirect('dashboard');
     }
 );
 

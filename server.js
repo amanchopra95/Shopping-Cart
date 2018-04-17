@@ -24,6 +24,8 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 app.use('/products', require('./routes/product'));
 app.use('/login', require('./routes/login'));
 app.use('/signup', require('./routes/signup'));
+app.use('/dashboard', require('./routes/dashboard'));
+app.use('/logout', require('./routes/logout'));
 
 app.listen(9898, () =>{
     console.log("The port is listening on http://localhost:9898");
