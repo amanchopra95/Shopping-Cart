@@ -2,21 +2,24 @@
  * Created by Aman Chopra 19-03-2018
  */
 
- let cart = [];
- let item = function (name, price, count){
+ //let cart = [];
+ /**let item = function (name, price, count){
      this.name = name;
      this.price = price;
      this.count = count;
- } 
+ }*/
+ 
+ let cart = {};
  let cartList;
 
-$(document).ready(function () {
+$(function () {
 
     cartList = $('#items');
+    loadCart()
+    //getProducts(refreshCart);
+
     
-    refreshCart(true);
-    
-    $('.add-to-cart').click(function(event) {
+    /*$('.add-to-cart').click(function(event) {
         event.preventDefault();
 
         let name = $(this).attr('data-name');
@@ -24,28 +27,60 @@ $(document).ready(function () {
 
         addItemToCart(name, price, 1);
         refreshCart(true);
-    });
+    });*/
 
+    window.saveToServer = function() {
+        let body = {usercart: []}
+        $('#btn-save').text('Saving...').prop('disabled', true)
+        for (productId in cart){
+            body.usercart.push({
+                productId,
+                quantity: cart[productId]
+            })
+        }
+        this.console.log(body)
+        $.post('/cart', body, (data) => {
+            $('#btn-save').text('Saved!').prop('disabled', true)
+            setTimeout(() => {
+                $('#btn-save').text('Save').prop('disabled', false)
+            }, 1000)
+        })
     
+    }
+    checkLoginStatus((loggedIn) => {
+        if(!loggedIn){
+            $('#btn-save').hide()
+        }
+        console.log("Inside the login status function")
+        getProducts((products) => {
+            getCart((savedCart) => {
+                cart = Object.assign(savedCart, cart)
+                saveCart()
+                refreshCart(true);
+            })
+        })
+    })
+
 });
 
-function displayCart(i) {
 
+function displayCart(product) {
+    console.log("Inside the displayCart")
     let tr = '';
     tr =`
         <tr>
             <td>
-                <span class="col-xs-2" onclick="removeCompleteItem(${i})"><i class="fas fa-times"></i></span>
+                <span class="col-xs-2" onclick="removeCompleteItem(${product.id})"><i class="fas fa-times"></i></span>
                 <span class="col-xs-3"><img src="images/Wallpaper.jpg" class="img-thumbnail"></span>
-                <span class="col-xs-2"><p id="pname">${cart[i].name}</p></span>
+                <span class="col-xs-2"><p id="pname">${product.name}</p></span>
             </td>
-            <td>${cart[i].price}</td>
+            <td>${product.price}</td>
             <td>
-                <span class="col-2" onclick="addCount(${i})"><i class="fas fa-plus"></i></span>
-                <span class="col-1">${cart[i].count}</span>
-                <span class="col-2" onclick="minusCount(${i})"><i class="fas fa-minus"></i></span>
+                <span class="col-2" onclick="addCount(${product.id})"><i class="fas fa-plus"></i></span>
+                <span class="col-1">${cart[product.id]}</span>
+                <span class="col-2" onclick="minusCount(${product.id})"><i class="fas fa-minus"></i></span>
             </td>
-            <td>Rs.${cart[i].price * cart[i].count}</td>
+            <td>Rs.${product.price * (cart[product.id] || 0)}</td>
         </tr>
     `;
     
@@ -53,9 +88,16 @@ function displayCart(i) {
 }
 
 
-function addItemToCart(name, price, count) {
-    
-    for (let i in cart){
+function addItemToCart(id) {
+    if(cart[id]){
+        cart[id] = cart[id] + 1;
+    } else{
+        cart[id] = 1;
+    }
+    saveCart();
+    getProducts(refreshCart);
+
+    /** for (let i in cart){
         if( cart[i].name === name ){
             cart[i].count += count;
             saveCart();
@@ -65,7 +107,7 @@ function addItemToCart(name, price, count) {
 
     let items = new item(name, price, count); //makes a new object.
     cart.push(items);
-    saveCart();
+    saveCart();*/
     
 }
 
@@ -76,7 +118,7 @@ function saveCart(){
 function loadCart(){
     cart = JSON.parse(localStorage.getItem("cart"));
     if (cart == null){
-        cart = []
+        cart = {}
     }
 }
 
@@ -87,35 +129,43 @@ function removeEverything() {
 }
 
 function removeCompleteItem(i) {
-    cart.splice(i, 1);
+    delete cart[i]
+    //cart.splice(i, 1);
     saveCart();
     refreshCart();
 }
 
 function addCount(i) {
     
-    cart[i].count++;
+    if(cart[i]){
+        cart[i] = cart[i] + 1
+    }
+    //cart[i].count++;
     saveCart();
     refreshCart();
 }
 
-function itemCount(name, count) {
+/**function itemCount(id) {
 
-    for(let i in cart){
-        if (cart[i].name === name){
-            cart[i].count = count;
-            break;
-        }
+    if(cart[id]){
+        return cart[id]
+    } else {
+
     }
-    refreshCart();
-}
+}*/
 
 function minusCount(i) {
 
-    cart[i].count--;
-    if (cart[i].count == 0){
-        cart.splice(i, 1);
+    if(cart[i]){
+        cart[i] = cart[i] - 1;
+        if(cart[i] == 0){
+            delete cart[i]
+        }
     }
+    //cart[i].count--;
+    //if (cart[i].count == 0){
+    //    cart.splice(i, 1);
+    //}
 
     saveCart();
     refreshCart();
@@ -123,27 +173,30 @@ function minusCount(i) {
 
 function total() {
     let total = 0;
-    for (let i in cart) {
-        total += cart[i].count*cart[i].price;
+    for (product of products) {
+        if(cart[product.id]){
+            total += product.price * (cart[product.id] || 0);
+        }
     }
     return total;
 }
 
 function refreshCart(firstPageLoad = false){
-
     if(!firstPageLoad){
         saveCart();
     }
     cartList.empty();
     loadCart();
-
-    for(let i in cart){
-        let cartItem = displayCart(i);
-        cartList.append(cartItem);
+    for(product of products){
+        if(cart[product.id]){
+            let cartItem = displayCart(product);
+            cartList.append(cartItem);
+        }  
     }
     cartList.append(`
     <td id="cart-table-total" colspan="4">Total</td>
     <td>${total()}</td>
     `)
-
 }
+
+
