@@ -19,6 +19,7 @@ function postProduct(product, done) {
 
 function getCart(done) {
     $.get('/cart', (data) => {
+        console.log(typeof data)
         let savedCart = {}
         for (item of data) {
             savedCart['' + item.productId] = item.quantity
