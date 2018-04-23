@@ -54,9 +54,9 @@ $(function () {
         console.log("Inside the login status function")
         getProducts((products) => {
             getCart((savedCart) => {
-                cart = Object.assign(savedCart, cart)
-                saveCart()
-                refreshCart(true);
+                cart = Object.assign(cart, savedCart)
+                console.log(cart)
+                refreshCart();
             })
         })
     })
@@ -76,11 +76,11 @@ function displayCart(product) {
             </td>
             <td>${product.price}</td>
             <td>
-                <span class="col-2" onclick="addCount(${product.id})"><i class="fas fa-plus"></i></span>
+                <span class="col-2" onclick="addCount(${product.id}, ${product.quantity})"><i class="fas fa-plus"></i></span>
                 <span class="col-1">${cart[product.id]}</span>
                 <span class="col-2" onclick="minusCount(${product.id})"><i class="fas fa-minus"></i></span>
             </td>
-            <td>Rs.${product.price * (cart[product.id] || 0)}</td>
+            <td>Rs.${(product.price * (cart[product.id] || 0)).toFixed(2)}</td>
         </tr>
     `;
     
@@ -135,10 +135,15 @@ function removeCompleteItem(i) {
     refreshCart();
 }
 
-function addCount(i) {
+function addCount(i, quant) {
     
     if(cart[i]){
-        cart[i] = cart[i] + 1
+        if(cart[i] < quant){
+            cart[i] = cart[i] + 1
+        } else {
+            console.log("Does not have enough quantity.")
+        }
+        
     }
     //cart[i].count++;
     saveCart();
@@ -178,7 +183,7 @@ function total() {
             total += product.price * (cart[product.id] || 0);
         }
     }
-    return total;
+    return total.toFixed(2);
 }
 
 function refreshCart(firstPageLoad = false){

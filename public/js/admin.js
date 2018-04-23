@@ -39,6 +39,7 @@ $(function () {
             <tr>
                 <td>${product.name}</td>
                 <td>${product.price}</td>
+                <td>${product.quantity}</td>
                 <td>
                     <a href="../products/${product.id}/delete"><span><i class="fas fa-trash-alt"></i></span></a>
                 </td>
@@ -51,7 +52,8 @@ $(function () {
         event.preventDefault();
         postProduct({
             name: $('#product-name').val(),
-            price: $('#product-price').val()
+            price: $('#product-price').val(),
+            quantity: $('#product-quantity').val()
         }, refreshTableProduct)
     })
 

@@ -10,7 +10,8 @@ routes.get('/', (req, res) => {
 routes.post('/', (req, res) => {
     Product.create({
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        quantity: req.body.quantity
     })
     .then((productCreated) => { res.json(productCreated)})
     .catch((err) => { res.send(err.message)})

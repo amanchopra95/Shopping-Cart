@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
 
-const db = new sequelize('shopsampledb', 'user', 'password',{
+const db = new sequelize('shopsampledb', 'shopadmin', 'Shoppass1!',{
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: false,
@@ -18,9 +18,14 @@ const Product = db.define('product', {
         type: sequelize.DataTypes.STRING(50),
         allowNull: false
     },
-
     price: {
-        type: sequelize.DataTypes.FLOAT
+        type: sequelize.DataTypes.FLOAT,
+        allowNull: false
+    },
+    quantity: {
+        type: sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     }
 });
 
