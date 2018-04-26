@@ -29,6 +29,15 @@ function getCart(done) {
     })
 }
 
+function getAdminProducts(done) {
+    $.get('/admin/adminProducts', (data) => {
+        let adminProducts = []
+        adminProducts = data
+        console.log(adminProducts)
+        done(adminProducts)
+    })
+}
+
 function refreshProducts(){
     let productDisplay = $('#product-display')
     for(product of products){

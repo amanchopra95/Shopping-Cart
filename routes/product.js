@@ -7,11 +7,21 @@ routes.get('/', (req, res) => {
     .catch((err) => { res.send(err.message)})
 });
 
+/* routes.get('/admin', (req, res) => {
+    Product.findAll({
+        where: {
+            userId: req.user.id
+        }
+    }).then((products) => {res.json(products)})
+    .catch((err) => { res.send(err.message) })
+}) */
+
 routes.post('/', (req, res) => {
     Product.create({
         name: req.body.name,
         price: req.body.price,
-        quantity: req.body.quantity
+        quantity: req.body.quantity,
+        userId: req.user.id
     })
     .then((productCreated) => { res.json(productCreated)})
     .catch((err) => { res.send(err.message)})

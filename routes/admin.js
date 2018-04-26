@@ -10,17 +10,15 @@ route.use('/', (req, res, next) => {
 })
 
 route.get('/', (req, res) => {
-    Product.find({
+    res.render('admin/admin')
+})
+
+route.get('/adminProducts', (req, res) => {
+    Product.findAll({
         where: {
             userId: req.user.id
         } 
-    }).then((products) => { 
-        if(products == 0){
-            res.render('admin/admin', {message: "No products added by you"})
-        } else{
-            res.render('admin/admin', {products: products})
-        }
-     })
+    }).then((products) => { res.json(products) })
     .catch((err) => {res.send(err.message)})
 })
 

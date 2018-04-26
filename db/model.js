@@ -26,7 +26,17 @@ const Product = db.define('product', {
         type: sequelize.DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
+    },
+    userId: {
+        type: sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'User',
+            key: 'id'
+        },
+        unique: 'user_id'
     }
+
 });
 
 const User = db.define('user', {
@@ -68,7 +78,7 @@ const Cart = db.define('cart', {
     }
 })
 
-Product.belongsTo(User)
+User.hasOne(Product)
 
 db.sync().then(() => console.log("Database Connected"));
 
