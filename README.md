@@ -18,5 +18,5 @@ Simply clone and
 * Sequelize
 * Passport and Passport-local
 
-
+To run this app simply type node server.js on the terminal.
 
