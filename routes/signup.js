@@ -8,7 +8,8 @@ route.get('/', (req, res) => {
 route.post('/', (req, res) => {
     User.create({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        roles: req.body.role
     })
     .then((newuser) => {
         res.redirect('/login')

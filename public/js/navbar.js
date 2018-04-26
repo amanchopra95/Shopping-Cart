@@ -24,6 +24,11 @@ function addNavbar(login) {
     } else {
         navbarButton = `
         <li class="list-item">
+            <a class="nav-link" href="/admin">
+                Admin
+            </a>
+        </li>
+        <li class="list-item">
             <a class="nav-link" href="/logout">
                 Logout
             </a>
@@ -38,7 +43,7 @@ function addNavbar(login) {
             <a class="navbar-brand" href="/">Home</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/admin">Admin</a></li>
+            <!--<li><a href="/admin">Admin</a></li>-->
             `+navbarButton+`
         </ul>
         <div class="pull-right">

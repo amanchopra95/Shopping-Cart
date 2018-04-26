@@ -54,7 +54,7 @@ $(function () {
         console.log("Inside the login status function")
         getProducts((products) => {
             getCart((savedCart) => {
-                cart = Object.assign(cart, savedCart)
+                cart = Object.assign(savedCart, cart)
                 console.log(cart)
                 refreshCart();
             })

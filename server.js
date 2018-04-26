@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const passport = require('./mypassport');
+const passport = require('./passport/mypassport');
 const path = require('path');
 
 const app = express();
@@ -25,6 +25,7 @@ app.use('/products', require('./routes/product'));
 app.use('/login', require('./routes/login'));
 app.use('/signup', require('./routes/signup'));
 app.use('/dashboard', require('./routes/dashboard'));
+app.use('/admin', require('./routes/admin'))
 app.use('/cart', require('./routes/cart'));
 app.use('/logout', require('./routes/logout'));
 

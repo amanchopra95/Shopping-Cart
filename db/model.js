@@ -38,6 +38,10 @@ const User = db.define('user', {
     password: {
         type: sequelize.DataTypes.STRING,
         allowNull: false
+    },
+    roles: {
+        type: sequelize.DataTypes.ENUM('admin', 'producer', 'user'),
+        allowNull: true
     }
 });
 
@@ -63,6 +67,8 @@ const Cart = db.define('cart', {
         unique: 'user_product'
     }
 })
+
+Product.belongsTo(User)
 
 db.sync().then(() => console.log("Database Connected"));
 
