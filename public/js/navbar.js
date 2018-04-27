@@ -1,9 +1,11 @@
+//Check if the user is login or not.
 function checkLoginStatus(done) {
     $.get('/dashboard/status', (data) => {
         done(data.status)
     })
 }
 
+//Add the navbar to every page.
 function addNavbar(login) {
     let navbarButton
     if(!login) {

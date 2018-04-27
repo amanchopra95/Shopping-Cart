@@ -24,13 +24,29 @@ route.post('/', (req, res) => {
         o.userId = req.user.id
         return o
     })
-
     Promise.all(usercart.map( o => Cart.upsert(o, {fields: ['quantity']})))
     .then(result => {
-        res.json({status: "Successful"})
+       res.json({result: "Successful"}) 
     })
     .catch((err) => {
         res.json({error: err})
+    })
+})
+
+route.delete('/', (req, res) => {
+    let usercart = req.body
+    usercart.userId = req.user.id
+
+    Cart.destroy({
+        where: {
+            productId: usercart.productId,
+            userId: usercart.userId
+        }
+    }).then(() => {
+            res.redirect('back')
+    })
+    .catch((err) => {
+        res.send(err)
     })
 })
 

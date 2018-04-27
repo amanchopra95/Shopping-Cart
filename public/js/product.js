@@ -1,9 +1,7 @@
+//Array of objects of products in the database.
 let products = [];
-//let cart = {};
-////if(localStorage.getItem('cart')){
-    //cart = JSON.parse(localStorage.getItem('cart'));
-//}
 
+// To get products from the database.
 function getProducts(done) {
     $.get('/products', (data) => {
         products = data;
@@ -11,33 +9,38 @@ function getProducts(done) {
     });
 }
 
+//Store products in the database.
 function postProduct(product, done) {
     $.post('/products', product, (data) => {
         getProducts(done);
+        getAdminProducts(done);
     });
 }
 
+//Get the cart of the user from the database.
+//cart gets saved in the localStorage.
+//cart is an object of the form {'productId': quantity}
 function getCart(done) {
     $.get('/cart', (data) => {
-        console.log(typeof data)
         let savedCart = {}
         for (item of data) {
             savedCart['' + item.productId] = item.quantity
-            console.log(savedCart)
         }
         done(savedCart)
     })
 }
 
+//Function gets called when the admin posts some new products in the database.
 function getAdminProducts(done) {
     $.get('/admin/adminProducts', (data) => {
         let adminProducts = []
         adminProducts = data
-        console.log(adminProducts)
         done(adminProducts)
     })
 }
 
+
+//Gets called to refresh the page after every addition or deletion of product in the database.
 function refreshProducts(){
     let productDisplay = $('#product-display')
     for(product of products){
@@ -67,27 +70,6 @@ function refreshProducts(){
             </div>
         `)
     }
-
-    /*window.addItemToCart = function (id) {
-        console.log("Inside window function")
-        if(cart[id]){
-            cart[id] = cart[id] + 1;
-        } else{
-            cart[id] = 1;
-        }
-        localStorage.setItem("cart", JSON.stringify(cart))
-        refreshProducts()
-    }*/
-
-    /**$('.add-to-cart').click(function(event) {
-        event.preventDefault();
-
-        let name = $(this).attr('data-name');
-        let price = Number($(this).attr('data-price'));
-
-        addItemToCart(name, price, 1);
-        refreshCart(true);
-    });*/
 }
 
 $(function () {

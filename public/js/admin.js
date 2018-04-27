@@ -1,5 +1,6 @@
 $(function () {
 
+//Refresh the admin table of products.
     function refreshTableProduct(adminProducts) {
         let productTableRow = $('#product-table-row');
         productTableRow.empty();
@@ -16,7 +17,7 @@ $(function () {
             `)
         }
     }
-
+//Submit request to post data in the database.
     $('#submit-product').click( (event) => {
         event.preventDefault();
         postProduct({

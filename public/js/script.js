@@ -38,12 +38,13 @@ $(function () {
                 quantity: cart[productId]
             })
         }
-        this.console.log(body)
+
         $.post('/cart', body, (data) => {
             $('#btn-save').text('Saved!').prop('disabled', true)
             setTimeout(() => {
                 $('#btn-save').text('Save').prop('disabled', false)
             }, 1000)
+
         })
     
     }
@@ -51,11 +52,9 @@ $(function () {
         if(!loggedIn){
             $('#btn-save').hide()
         }
-        console.log("Inside the login status function")
         getProducts((products) => {
             getCart((savedCart) => {
                 cart = Object.assign(savedCart, cart)
-                console.log(cart)
                 refreshCart();
             })
         })
@@ -65,12 +64,11 @@ $(function () {
 
 
 function displayCart(product) {
-    console.log("Inside the displayCart")
     let tr = '';
     tr =`
         <tr>
             <td>
-                <span class="col-xs-2" onclick="removeCompleteItem(${product.id})"><i class="fas fa-times"></i></span>
+                <span class="col-xs-2 deleteItem" onclick="deleteFromCart(${product.id})"><i class="fas fa-times"></i></span>
                 <span class="col-xs-3"><img src="images/Wallpaper.jpg" class="img-thumbnail"></span>
                 <span class="col-xs-2"><p id="pname">${product.name}</p></span>
             </td>
@@ -128,7 +126,18 @@ function removeEverything() {
     refreshCart();
 }
 
+function deleteFromCart(id) {
+    body = {productId: id}
+    $.ajax({
+        url: '/cart',
+        type: 'DELETE',
+        data: body,
+        success: removeCompleteItem(id)
+    })
+}
+
 function removeCompleteItem(i) {
+    
     delete cart[i]
     //cart.splice(i, 1);
     saveCart();
@@ -196,12 +205,17 @@ function refreshCart(firstPageLoad = false){
         if(cart[product.id]){
             let cartItem = displayCart(product);
             cartList.append(cartItem);
-        }  
+        } 
     }
-    cartList.append(`
-    <td id="cart-table-total" colspan="4">Total</td>
-    <td>${total()}</td>
-    `)
+    if (!cartList){
+        cartList.append(`<p>Add items to your cart.</p>`);
+    } else{
+        cartList.append(`
+        <td id="cart-table-total" colspan="4">Total</td>
+        <td>${total()}</td>
+        `)
+    }
+
 }
 
 
