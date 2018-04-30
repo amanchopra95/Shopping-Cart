@@ -29,6 +29,4 @@ app.use('/admin', require('./routes/admin'))
 app.use('/cart', require('./routes/cart'));
 app.use('/logout', require('./routes/logout'));
 
-app.listen(9898, () =>{
-    console.log("The port is listening on http://localhost:9898");
-});
+module.exports = app

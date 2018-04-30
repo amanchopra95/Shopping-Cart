@@ -13,8 +13,9 @@ route.get('/', (req, res) => {
     Cart.findAll({
         where: {userId: req.user.id}
     }).then((cartItems) => {
-        console.log("Got the cart of the user")
         res.json(cartItems)
+    }).catch((err) => {
+        res.send(err)
     })
 })
 
