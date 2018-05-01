@@ -16,7 +16,7 @@ describe('Server', () => {
 
     describe('Products', () => {
         it('should return all the products', (done) => {
-            request.get('http://127.0.0.1:9898/products', (err, response, body) => {
+            request.get('http://localhost:9898/products', (err, response, body) => {
                 expect(body).to.be.not.empty
                 expect(response.statusCode).to.be.equal(200)
                 done()
