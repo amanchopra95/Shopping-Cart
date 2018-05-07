@@ -19,7 +19,6 @@ function checkAdminStatus(done, login) {
      */
     $.get('/admin/status')
         .done((data) => {
-            console.log(data.admin)
             status.admin = data.admin
         })
         .fail(() => {

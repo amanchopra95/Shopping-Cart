@@ -1,6 +1,7 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const { User } = require('../db/model');
+const compare2hash = require('../password').compare2hash
 
 passport.serializeUser( (user, done) => {
     if(!user.id){
@@ -33,11 +34,15 @@ passport.use(new localStrategy( (username, password, done) => {
         if(!user){
             return done(null, false);
         }
-        if(user.password !== password){
-            return done(null, false);
-        }
 
-        return done(null, user);
+        compare2hash(password, user.password)
+        .then((match) => {
+            if(!match){
+                return done(null, false)
+            }
+            return done(null, user)
+        })
+        .catch((err) => { res.send(err.message) })
     }).catch((err) => done(err))
 }))
 
