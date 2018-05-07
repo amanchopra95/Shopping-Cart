@@ -1,6 +1,6 @@
 # Shopping-Cart
 
-Under Development simple e-commerce web app based on node js at the backend.
+Under Development simple e-commerce web app based on node js at the backend.This is an open source project, feel free to PR and contribute to this project. Suitable for those who want to learn.
 
 ## Installation
 ### Setup Database in mysql
