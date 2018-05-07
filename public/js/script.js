@@ -69,7 +69,7 @@ function displayCart(product) {
         <tr>
             <td>
                 <span class="col-xs-2 deleteItem" onclick="deleteFromCart(${product.id})"><i class="fas fa-times"></i></span>
-                <span class="col-xs-3"><img src="images/Wallpaper.jpg" class="img-thumbnail"></span>
+                <span class="col-xs-3"><img src="/images/Wallpaper.jpg" class="img-thumbnail"></span>
                 <span class="col-xs-2"><p id="pname">${product.name}</p></span>
             </td>
             <td>${product.price}</td>

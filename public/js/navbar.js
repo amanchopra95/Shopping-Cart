@@ -17,15 +17,15 @@ function checkAdminStatus(done, login) {
     /**
      * Using Promises in jQuery.
      */
-    let jqxhr = $.get('/admin/status')
+    $.get('/admin/status')
         .done((data) => {
+            console.log(data.admin)
             status.admin = data.admin
         })
         .fail(() => {
             status.admin = false
         })
         .always(() => {
-            status.admin = false
             done(status)
         })
 
