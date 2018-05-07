@@ -1,14 +1,58 @@
 //Check if the user is login or not.
 function checkLoginStatus(done) {
     $.get('/dashboard/status', (data) => {
-        done(data.status)
+        if(data.status){
+            checkAdminStatus(done, data)
+        }
+        else {
+            done(data)
+        }
     })
 }
 
+function checkAdminStatus(done, login) {
+    let status = {
+        'status': login.status,
+    }
+    /**
+     * Using Promises in jQuery.
+     */
+    let jqxhr = $.get('/admin/status')
+        .done((data) => {
+            status.admin = data.admin
+        })
+        .fail(() => {
+            status.admin = false
+        })
+        .always(() => {
+            status.admin = false
+            done(status)
+        })
+
+/*      Using callbacks.
+
+        $.get('/admin/status', (data) => {
+        let status = {}
+        if(data.admin){
+            status = {
+                'status': login.status,
+                'admin': data.admin,
+            }
+        } else if (data == ){
+            status = {
+                'status': login.status,
+                'admin': false
+            }
+        }
+
+        done(status)
+    }) */
+}
+
 //Add the navbar to every page.
-function addNavbar(login) {
+function addNavbar(status) {
     let navbarButton
-    if(!login) {
+    if(!(status.status)) {
         navbarButton = `
         <li class="list-item">
             <a class="nav-link" href="/login">
@@ -23,20 +67,28 @@ function addNavbar(login) {
             </a>
         </li>
         `
-    } else {
-        navbarButton = `
-        <li class="list-item">
-            <a class="nav-link" href="/admin">
-                Admin
-            </a>
-        </li>
-        <li class="list-item">
-            <a class="nav-link" href="/logout">
-                Logout
-            </a>
-        </li>
-        `
-    }
+    }   else if(!(status.admin)){
+            navbarButton = `
+                <li class="list-item">
+                    <a class="nav-link" href="/logout">
+                        Logout
+                    </a>
+                </li>
+                `
+        }   else {
+            navbarButton = `
+            <li class="list-item">
+                <a class="nav-link" href="/admin">
+                    Admin
+                </a>
+            </li>
+            <li class="list-item">
+                <a class="nav-link" href="/logout">
+                    Logout
+                </a>
+            </li>
+            `
+            } 
 
     $('body').prepend(`
     <nav class="navbar navbar-default" id="header">
@@ -45,7 +97,6 @@ function addNavbar(login) {
             <a class="navbar-brand" href="/">Home</a>
         </div>
         <ul class="nav navbar-nav">
-            <!--<li><a href="/admin">Admin</a></li>-->
             `+navbarButton+`
         </ul>
         <div class="pull-right">

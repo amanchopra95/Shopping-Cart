@@ -1,5 +1,6 @@
 const routes = require('express').Router();
 const {Product} = require('../db/model.js');
+const acl = require('../accessControl');
 
 routes.get('/', (req, res) => {
     Product.findAll()
@@ -27,7 +28,7 @@ routes.post('/', (req, res) => {
     .catch((err) => { res.send(err.message)})
 });
 
-routes.get('/:id/delete', (req, res) => {
+routes.get('/:id/delete', acl.ensureRole('admin'), (req, res) => {
     Product.findById(req.params.id)
         .then((product) => {
             Product.destroy({

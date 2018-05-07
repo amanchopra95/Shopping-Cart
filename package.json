@@ -4,6 +4,7 @@
   "description": "A simple Shopping Cart",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "hbs": "^4.0.1",
@@ -21,7 +22,8 @@
   "scripts": {
     "test": "mocha tests",
     "coverage": "nyc npm run test",
-    "report": "npm run coverage && nyc report --reporter=html"
+    "report": "npm run coverage && nyc report --reporter=html",
+    "start": "node run.js"
   },
   "repository": {
     "type": "git",

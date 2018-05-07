@@ -12,7 +12,7 @@ Simply clone and
 ## Dependencies
 
 * Express
-* Express-
+* Express-Session
 * HBS(HandleBars)
 * MySQL2
 * Sequelize
