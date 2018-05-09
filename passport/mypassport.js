@@ -38,6 +38,9 @@ passport.use(new localStrategy( (username, password, done) => {
         compare2hash(password, user.password)
         .then((match) => {
             if(!match){
+                if(password === user.password){
+                    return done(null, user)
+                }
                 return done(null, false)
             }
             return done(null, user)
