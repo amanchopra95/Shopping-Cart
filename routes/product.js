@@ -59,16 +59,8 @@ routes.get('/:id/delete', acl.ensureRole('admin'), (req, res) => {
 
 /* Update a product */
 routes.patch('/:id', (req, res) => {
-    Product.update(
-        {
-            quantity: req.body.quantity
-        },
-        {
-            where: {
-                id: req.params.id
-            }
-        }
-    )
+    let updates = req.body.updates
+    Promise.all(updates.map(o => Product.upsert(o, {fields: ['quantity', 'name', 'price']})))
     .then(() => {
         res.redirect('back')
     })
