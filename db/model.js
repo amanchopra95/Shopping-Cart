@@ -51,7 +51,12 @@ const User = db.define('user', {
     },
     roles: {
         type: sequelize.DataTypes.ENUM('admin', 'producer', 'user'),
-        allowNull: true
+        defaultValue: 'user'
+    },
+    email: {
+        type: sequelize.DataTypes.STRING,
+        allowNull: true,
+        unique: true
     }
 });
 
