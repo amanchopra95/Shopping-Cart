@@ -27,4 +27,19 @@ route.get('/adminProducts', acl.ensureAdmin, (req, res) => {
     .catch((err) => {res.send(err.message)})
 })
 
+/* route.patch('/createProducer', acl.ensureAdmin, (req, res) => {
+    if(!req.user.roles === 'producer'){
+        Product.update(
+            {
+                roles: 'producer'
+            },
+            {
+                where: {
+                    id: req.body
+                }
+            }
+        )
+    }
+}) */
+
 module.exports = route

@@ -49,6 +49,10 @@ function checkAdminStatus(done, login) {
 }
 
 //Add the navbar to every page.
+/**
+ * @param {object} status- contains roles as well
+ */
+
 function addNavbar(status) {
     let navbarButton
     if(!(status.status)) {

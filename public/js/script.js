@@ -48,8 +48,8 @@ $(function () {
         })
     
     }
-    checkLoginStatus((loggedIn) => {
-        if(!loggedIn){
+    checkLoginStatus((status) => {
+        if(!status.status){
             $('#btn-save').hide()
         }
         getProducts((products) => {

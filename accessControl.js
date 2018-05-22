@@ -18,5 +18,5 @@ function ensureRole(role) {
 
 module.exports = {
     ensureAdmin,
-    ensureRole
+    ensureRole,
 }
