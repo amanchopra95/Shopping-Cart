@@ -16,7 +16,16 @@ function ensureRole(role) {
     }
 }
 
+function ensureLogin(req, res, next) {
+    if(req.user){
+        next()
+    } else {
+        res.send("Not logged in")
+    }
+}
+
 module.exports = {
     ensureAdmin,
     ensureRole,
+    ensureLogin
 }

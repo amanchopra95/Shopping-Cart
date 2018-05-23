@@ -69,6 +69,16 @@
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8">
                         <h2 class="h2 text-center">{{user.username}}</h2>
+                        {{#if user.photo}}
+                        <img src = "{{user.photo}}"/>
+                        {{else}}
+                        <p>Upload  a photo of yours...</p>
+                        <form method="post" enctype="multipart/form-data" action="/dashboard/upload">
+                            <input type="file" name="photo">
+                            <input type="submit" name="submit" value="Submit" id="uploadImage">
+                        </form>
+                        {{/if}}
+
                     </div>
                     <div class="col-lg-2"></div>
                 </div>

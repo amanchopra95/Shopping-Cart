@@ -11,10 +11,11 @@ route.post('/', (req, res) => {
     .then((hash) => {
         User.create({
             username: req.body.username,
+            email: req.body.email,
             password: hash,
         })
         .then((newuser) => {
-            res.redirect('/dashboard')
+            res.redirect('/login')
         })
         .catch((err) => {
             res.send(err.message)

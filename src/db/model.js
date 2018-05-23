@@ -57,6 +57,10 @@ const User = db.define('user', {
         type: sequelize.DataTypes.STRING,
         allowNull: true,
         unique: true
+    },
+    photo: {
+        type: sequelize.DataTypes.STRING,
+        allowNull: true
     }
 });
 
