@@ -1,12 +1,12 @@
 require('mocha')
 const request = require('request')
 const chai = require('chai')
-const cart = require('../routes/cart')
+const cart = require('../src/routes/cart')
 
 const expect = chai.expect
 const assert = chai.assert
 
-const app = require('../server')
+const app = require('../src/server')
 
 describe("Server start", () => {
     let server

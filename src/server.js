@@ -18,7 +18,7 @@ app.use(passport.session());
 app.set('view engine', 'hbs');
 
 //Static Files
-app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '../public')));
 
 //Routes
 app.use('/products', require('./routes/product'));

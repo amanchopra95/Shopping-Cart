@@ -3,10 +3,19 @@ const acl = require('../accessControl')
 const fs = require('fs')
 const User = require("../db/model")
 const multer = require('multer')
+const path = require('path')
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './public/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+})
 
 const upload = multer(
     {
-        dest: 'public/uploads',
         limits: {
             fileSize: 10000000, 
             files: 1
@@ -15,11 +24,11 @@ const upload = multer(
             if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
                 return cb (new Error ("Only jpg, jpeg or png files allowed."), false)
             }
-
             return cb(null, true)
-        }
+        },
+        storage: storage
     }
-).single('image')
+)
 
 route.get('/', (req, res) => {
     if(!req.user){
@@ -31,15 +40,23 @@ route.get('/', (req, res) => {
 
 route.get('/status', (req, res) => res.send({status: !!req.user}))
 
-route.post('/upload', acl.ensureLogin, (req, res) => {
-    upload (req, res, (err) => {
-        if (err) {
-            res.send(err.message)
+route.post('/', upload.single('photo'), (req, res) => {
+        if (req.file == undefined) {
+            res.render('dashboard', {
+                msg: "Error: No file selected"
+            })
         } else {
-            
+            res.render('dashboard', {
+                msg: "File uploaded",
+                file: `./public/uploads/${req.file.filename}`
+            })
         }
+    })
+
+/* route.post('/upload', (req, res) => {
+    User.update({
 
     })
-})
+}) */
 
 module.exports = route
