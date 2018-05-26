@@ -1,7 +1,7 @@
 const route = require('express').Router()
 const acl = require('../accessControl')
 const fs = require('fs')
-const User = require("../db/model")
+const { User } = require("../db/model")
 const multer = require('multer')
 const path = require('path')
 
@@ -46,23 +46,15 @@ route.post('/', upload.single('photo'), (req, res) => {
                 msg: "Error: No file selected"
             })
         } else {
-            res.render('dashboard', {
-                msg: "File uploaded",
-                file: `./public/uploads/${req.file.filename}`
-            })
+            User.findById(req.user.id)
+                .then((user) => {
+                    user.update({ photo: req.file.filename })
+                        .then(() => res.render('dashboard', { msg: "File uploaded to the server", user: req.user}))
+                        .catch((err) => res.render('dashboard', { msg: err.message }))
+                })
+                .catch((err) => res.render('dashboard', { msg: "Some problem occured couldn't connect with the database" }))
         }
     })
 
-/* function uploadImage() {
-    return (req, res) => {
-        User.findById(req.user.id)
-        .then((user) => {
-            user.update({photo: req.file.fielname})
-            .then(() => res.render('dashboard', {msg: "File uploaded to the server"}))
-            .catch((err) => res.render('dashboard', {msg: err.message}))
-        })
-        .catch((err) => res.render('dashboard', {msg: "Some problem occured couldn't connect with the database"}))
-    }
-} */
 
 module.exports = route
