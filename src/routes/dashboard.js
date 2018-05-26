@@ -53,10 +53,16 @@ route.post('/', upload.single('photo'), (req, res) => {
         }
     })
 
-/* route.post('/upload', (req, res) => {
-    User.update({
-
-    })
-}) */
+/* function uploadImage() {
+    return (req, res) => {
+        User.findById(req.user.id)
+        .then((user) => {
+            user.update({photo: req.file.fielname})
+            .then(() => res.render('dashboard', {msg: "File uploaded to the server"}))
+            .catch((err) => res.render('dashboard', {msg: err.message}))
+        })
+        .catch((err) => res.render('dashboard', {msg: "Some problem occured couldn't connect with the database"}))
+    }
+} */
 
 module.exports = route
