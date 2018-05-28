@@ -73,7 +73,12 @@
                         <p>{{ msg }}</p>
                         {{/if}}
                         {{#if user.photo}}
-                        <img src = "http://localhost:9898/public/uploads/{{user.photo}}"/>
+                        <img src = "/uploads/{{user.photo}}" width="100px" height="100px"/>
+                        <p>Update your photo</p>
+                        <form method="post" enctype="multipart/form-data" action="/dashboard">
+                            <input type="file" name="photo" id="photo">
+                            <input type="submit" name="submit" value="Submit" id="uploadImage">
+                        </form>
                         {{else}}
                         <p>Upload  a photo of yours...</p>
                         <form method="post" enctype="multipart/form-data" action="/dashboard">
