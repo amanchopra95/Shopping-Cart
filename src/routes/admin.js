@@ -1,6 +1,6 @@
 const route = require('express').Router()
 const { Product } = require('../db/model.js')
-const acl = require('../accessControl')
+const acl = require('../middlewares/accessControl')
 
 /* route.use('/', (req, res, next) => {
     if(!req.user){

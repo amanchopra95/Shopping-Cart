@@ -1,6 +1,6 @@
 const route = require('express').Router();
 const { User } = require('../db/model');
-const pass2hash = require('../password').pass2hash
+const pass2hash = require('../utils/password').pass2hash
 
 route.get('/', (req, res) => {
     res.render('signup')

@@ -17,10 +17,10 @@ function ensureRole(role) {
 }
 
 function ensureLogin(req, res, next) {
-    if(req.user){
-        next()
-    } else {
+    if(!req.user){
         res.send("Not logged in")
+    } else {
+        next()
     }
 }
 

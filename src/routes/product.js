@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const {Product} = require('../db/model.js');
-const acl = require('../accessControl');
+const acl = require('../middlewares/accessControl');
 
 /* Get products from the server */
 routes.get('/', (req, res) => {

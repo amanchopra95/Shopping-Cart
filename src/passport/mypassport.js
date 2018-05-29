@@ -1,7 +1,7 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const { User } = require('../db/model');
-const compare2hash = require('../password').compare2hash
+const compare2hash = require('../utils/password').compare2hash
 
 passport.serializeUser( (user, done) => {
     if(!user.id){
