@@ -1,6 +1,7 @@
 const routes = require('express').Router();
 const {Product} = require('../db/model.js');
 const acl = require('../middlewares/accessControl');
+const image = require('../utils/uploadImage')
 
 /* Get products from the server */
 routes.get('/', (req, res) => {
@@ -27,12 +28,13 @@ routes.get('/:id', (req, res) => {
 })
 
 /* Post a product to the server */
-routes.post('/', (req, res) => {
+routes.post('/', image.upload.single('image'), (req, res) => {
     Product.create({
         name: req.body.name,
         price: req.body.price,
         quantity: req.body.quantity,
-        userId: req.user.id
+        userId: req.user.id,
+        image: req.file.filename
     })
     .then((productCreated) => { res.json(productCreated)})
     .catch((err) => { res.send(err.message)})

@@ -1,5 +1,6 @@
 const multer = require('multer')
 const { User } = require('../db/model')
+const { Product } = require('../db/model')
 const path = require('path')
 const fs = require('fs')
 
@@ -50,7 +51,9 @@ function uploadImage(req , res) {
             })
             .catch((err) => res.send(err.message))
     }
-} 
+}
+
+
 
 module.exports = {
     upload,

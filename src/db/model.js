@@ -35,6 +35,10 @@ const Product = db.define('product', {
             key: 'id'
         },
         unique: 'user_id'
+    }, 
+    image: {
+        type: sequelize.DataTypes.STRING,
+        allowNull: true,
     }
 
 });
