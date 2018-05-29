@@ -31,14 +31,20 @@ const upload = multer(
 )
 
 route.get('/', (req, res) => {
+    if (!req.user) {
+        res.send("Unauthorised.")
+    }
     res.render('dashboard', {user: req.user})
 })
 
-route.get('/get/profile-pic/:userId', (res, req) => {
-    User.findById(userId)
+route.get('/get/profile-pic/:userId', (req, res) => {
+    if (!req.user) {
+        res.send("Unauthorised")
+    }
+    User.findById(req.params.userId)
         .then((user) => {
             if (user.photo) {
-                res.sendFile(fs.readFileSync(`./public/uploads/${user.photo}`))
+                res.sendFile(path.resolve(`./public/uploads/${user.photo}`))
             } else {
                 res.send("No such file exist.")
             }
