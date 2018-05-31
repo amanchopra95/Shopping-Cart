@@ -1,7 +1,8 @@
 const routes = require('express').Router();
 const {Product} = require('../db/model.js');
 const acl = require('../middlewares/accessControl');
-const image = require('../utils/uploadImage')
+const upload = require('../utils/uploadImage').productForm
+
 
 /* Get products from the server */
 routes.get('/', (req, res) => {
@@ -28,7 +29,7 @@ routes.get('/:id', (req, res) => {
 })
 
 /* Post a product to the server */
-routes.post('/', image.upload.single('image'), (req, res) => {
+routes.post('/', upload.single('image'), (req, res) => {
     Product.create({
         name: req.body.name,
         price: req.body.price,

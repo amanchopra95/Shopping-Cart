@@ -11,10 +11,38 @@ function getProducts(done) {
 
 //Store products in the database.
 function postProduct(product, done) {
-    $.post('/products', product, (data) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open("POST", "../products", true)
+    xhr.onload = () => {
+        if (xhr.status == 200) {
+            console.log(this.responseText)
+            getProducts(done)
+            getAdminProducts(done)
+        } else {
+            console.log("Error " + xhr.status + "Response " + xhr.responseText)
+        }
+    }
+    xhr.send(product)
+    /* $.ajax({
+        method: 'POST',
+        type: 'POST',
+        url: '../products',
+        data: product,
+        contentType: false,
+        processType: false,
+        success: (data) => {
+            getProducts(done);
+            getAdminProducts(done);
+        },
+        error: (err) => {
+            console.log(err)
+        }
+    }); */
+    console.log(product)
+    /* $.post('/products', product, (data) => {
         getProducts(done);
         getAdminProducts(done);
-    });
+    }) */
 }
 
 //Get the cart of the user from the database.

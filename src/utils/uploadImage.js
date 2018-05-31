@@ -6,7 +6,16 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './public/uploads')
+        cb(null, './public/uploads/users')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+})
+
+const productStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './public/uploads/products')
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
@@ -25,6 +34,20 @@ const upload = multer({
         return cb(null, true)
     },
     storage: storage
+})
+
+const productForm = multer({
+    storage: productStorage,
+    limits: {
+        fileSize: 10000000,
+        files: 1
+    },
+    fileFilter: (req, file, cb) => {
+        if (!file.originalname.match(/\.(jpeg|jpg|png|gif)$/)) {
+            return cb(new Error("Only jpeg, jpg, png or gif file supported."), false)
+        }
+        return cb(null, true)
+    }
 })
 
 function displayPhoto (req, res) {
@@ -55,8 +78,10 @@ function uploadImage(req , res) {
 
 
 
+
 module.exports = {
     upload,
     uploadImage,
-    displayPhoto
+    displayPhoto,
+    productForm
 }
