@@ -73,7 +73,7 @@
                         <p>{{ msg }}</p>
                         {{/if}}
                         {{#if user.photo}}
-                        <img src = "/uploads/{{user.photo}}" width="100px" height="100px"/>
+                        <img src = "/uploads/users/{{user.photo}}" width="100px" height="100px"/>
                         <p>Update your photo</p>
                         <form method="post" enctype="multipart/form-data" action="/dashboard">
                             <input type="file" name="photo" id="photo">

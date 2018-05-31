@@ -38,7 +38,6 @@ function postProduct(product, done) {
             console.log(err)
         }
     }); */
-    console.log(product)
     /* $.post('/products', product, (data) => {
         getProducts(done);
         getAdminProducts(done);
@@ -76,7 +75,7 @@ function refreshProducts(){
             <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
                 <div class="panel-group" id="product">
                     <div class="panel panel-default">
-                        <img class="img-responsive" src="images/Wallpaper.jpg">
+                        <img class="img-responsive" src="/uploads/products/${product.image}">
                         <h4 class="panel-heading text-center" id="heading">
                             ${product.name}
                         </h4>
