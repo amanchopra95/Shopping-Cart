@@ -11,6 +11,9 @@ function getProducts(done) {
 
 //Store products in the database.
 function postProduct(product, done) {
+    /**
+     * XMLHttpRequest
+     */
     const xhr = new XMLHttpRequest()
     xhr.open("POST", "../products", true)
     xhr.onload = () => {
